@@ -55,14 +55,23 @@ router.post('/:tutorId/new_student', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-    const skip = req.query.skip || 0;
-    const limit = req.query.limit || 10;
+    const skip = req.params.skip || 0;
+    const limit = req.params.limit || 10;
 
     const tutors = await Tutor.find().skip(skip).limit(limit).catch((error) => {
         res.status(400).send({ error: error.message });
     });
 
-    res.status(200).send({ tutors });
+    const count = await Tutor.countDocuments();
+
+    const result = {
+        data: tutors,
+        meta: {
+            totalRecords: count
+        }
+    };
+
+    res.status(200).send(result);
 });
 
 router.get('/:id', async (req, res) => {
