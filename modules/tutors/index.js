@@ -4,7 +4,7 @@ const { Tutor } = require('../../models/tutor');
 
 router.post('/', async (req, res) => {
     if (!req.body.name || !req.body.city) {
-        res.status(400).send('Missing fields');
+        res.status(400).send({ error: 'Missing fields' });
         return;
     }
 
@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
     });
 
     await tutor.save().catch((error) => {
-        res.status(400).send('Error: ' + error.message);
+        res.status(400).send({ error: error.message });
     });
 
     res.status(201).send({ tutor });
@@ -25,16 +25,21 @@ router.get('/', async (req, res) => {
     const limit = req.query.limit || 10;
 
     const tutors = await Tutor.find().skip(skip).limit(limit).catch((error) => {
-        res.status(400).send('Error: ' + error.message);
+        res.status(400).send({ error: error.message });
     });
 
     res.status(200).send({ tutors });
 });
 
 router.get('/:id', async (req, res) => {
-    const tutor = await Tutor.findOne(req.body.id).catch((error) => {
-        res.status(400).send('Error: ' + error.message);
+    const tutor = await Tutor.findOne({ _id: req.params.id }).catch((error) => {
+        res.status(400).send({ error: error.message });
     });
+
+    if (!tutor) {
+        res.status(404).send({ error: 'Tutor not found' });
+    }
+
     res.status(200).send({ tutor });
 });
 
