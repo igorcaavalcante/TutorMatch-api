@@ -1,10 +1,13 @@
 const express = require('express');
+var cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
 
+app.use(cors());
+
 mongoose.connect('mongodb://localhost/TutorMatch')
     .then(() => console.log('Connected to MongoDB...'))
-    .catch(err => console.error('Could not connect to MongoDB...'));
+    .catch(() => console.error('Could not connect to MongoDB...'));
 
 app.use(express.json());
 
