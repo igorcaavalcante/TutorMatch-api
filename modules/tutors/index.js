@@ -38,6 +38,7 @@ router.get('/:id', async (req, res) => {
 
     if (!tutor) {
         res.status(404).send({ error: 'Tutor not found' });
+        return;
     }
 
     res.status(200).send({ tutor });
