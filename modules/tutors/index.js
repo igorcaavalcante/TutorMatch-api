@@ -41,8 +41,13 @@ router.post('/:tutorId/new_student', async (req, res) => {
     }
 
     tutor.students.push(student);
+    student.tutor = tutor;
 
+    // TODO: use transactions on this saves
     await tutor.save().catch((error) => {
+        res.status(400).send({ error: error.message });
+    });
+    await student.save().catch((error) => {
         res.status(400).send({ error: error.message });
     });
 
