@@ -29,3 +29,7 @@ or
 nodemon index.js
 ```
 to use [nodemon](https://nodemon.io/) (if you want use nodemon, install using `sudo npm install -g nodemon`).
+
+To make requests you can use [Postman](https://www.getpostman.com/downloads/) and get the collection that i've made:
+
+`https://www.getpostman.com/collections/1dd74234592a052075a6`
