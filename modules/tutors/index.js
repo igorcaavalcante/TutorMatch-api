@@ -51,7 +51,7 @@ router.post('/:tutorId/new_student', async (req, res) => {
         res.status(400).send({ error: error.message });
     });
 
-    res.status(200).send({ tutor });
+    res.status(200).send();
 });
 
 router.get('/', async (req, res) => {
